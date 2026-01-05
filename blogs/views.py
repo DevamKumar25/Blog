@@ -50,12 +50,19 @@ def blogs(request,slug):
 
 
 def search(request):
-    keyword = request.GET.get('keyword')
+    keyword = request.GET.get('keyword', '').strip() # Get the search keyword from the request and strip any leading/trailing whitespace
 
-    blogs = Blog.objects.filter(Q(title__icontains=keyword) | Q(short_description_icontains=keyword)| Q(blog_body_icontains=keyword), status='Published')
+    blogs = []
+    if keyword:
+        blogs = Blog.objects.filter(
+            Q(title__icontains=keyword) |
+            Q(short_description__icontains=keyword) |
+            Q(blog_body__icontains=keyword),
+            status='Published'
+        )
+
     context = {
         'blogs': blogs,
         'keyword': keyword,
-
     }
-    return render(request,'search.html',context)
+    return render(request, 'search.html', context)

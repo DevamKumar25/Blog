@@ -25,10 +25,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name='home'),
     path('category/',include('blogs.urls')),
-    path('blogs/<slug:slug>/',blogView.blogs,name='blogs'),
-    
     # Search endpoint
     path('blogs/search/',blogView.search,name='search'),
+    path('blogs/<slug:slug>/',blogView.blogs,name='blogs'),
+    
     path('register/',views.register,name='register'),
     path('login/',views.login,name='login'),
     path('logout/',views.logout,name='logout'),
